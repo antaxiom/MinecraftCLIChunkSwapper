@@ -29,6 +29,7 @@ namespace Testing
         {
             if (WriteLineAsync)
             {
+                // TODO: Benchmark and ensure this is running asynchronous
                 await Task.Run(() => Console.WriteLine(s, args));
                 // PrintQueue.Enqueue(new Tuple<string, object[]>(s, args));
             }
