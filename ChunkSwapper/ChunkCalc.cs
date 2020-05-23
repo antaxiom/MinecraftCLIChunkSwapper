@@ -7,7 +7,7 @@ namespace Testing
         /// <summary>
         ///     Gets the byte offsets of the chunks the user specified
         /// </summary>
-        /// <returns>byteoff1, byteoff2</returns>
+        /// <returns>Byteoffset of chunk 1 and 2, XY of Region 1 and 2</returns>
         public static (int byteoff1, int byteoff2, int regionx1, int regionz1, int regionx2, int regionz2) ChunkCalc()
         {
             Console.WriteLine("All Good");
