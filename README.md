@@ -1,7 +1,7 @@
 # MinecraftCLIChunkSwapper
 Simple CLI tool for Swapping Minecraft Chunks in the Anvil World Fromat
 
-A simple project C# by a novice 
+A simple project C# by a novice + a lot of help
 
 ![ASP.NET Core](https://github.com/DoubleScripts/MinecraftCLIChunkSwapper/workflows/ASP.NET%20Core/badge.svg)
 
