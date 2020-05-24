@@ -14,8 +14,8 @@ namespace Testing
             var regionZ1 = (int) Math.Floor(inZ1 / 32.0);
             var regionX2 = (int) Math.Floor(inX2 / 32.0);
             var regionZ2 = (int) Math.Floor(inZ2 / 32.0);
-            var byteOff1 = 4 * (inX1 % 32 + inZ1 % 32 * 32);
-            var byteOff2 = 4 * (inX2 % 32 + inZ2 % 32 * 32);
+            var byteOff1 = Math.Abs(4 * (inX1 % 32 + inZ1 % 32 * 32));
+            var byteOff2 = Math.Abs(4 * (inX2 % 32 + inZ2 % 32 * 32));
 
             Console.WriteLine($"Region inputs are {inX1}, {inZ1} and {inX2}, {inZ2}");
 
