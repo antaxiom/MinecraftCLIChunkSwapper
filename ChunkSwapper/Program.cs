@@ -29,11 +29,9 @@ namespace Testing
             }
             else
             {
-                // TODO: Does this code restart the stop watch or resume?
-                stopwatch.Stop();
                 var chunkPair = initializeInputVariables();
+                chunkPairs.Add(await chunkPair);
                 stopwatch.Start();
-                chunkPairs.Add(chunkPair);
             }
 
             foreach (var chunkPair in chunkPairs)
@@ -59,10 +57,10 @@ namespace Testing
             AsyncLogger.StopThread();
         }
 
-        internal static ChunkPair initializeInputVariables()
+        internal static async Task<ChunkPair> initializeInputVariables()
         {
             AsyncLogger.WriteLine("All Good");
-            AsyncLogger.WriteLine("What is chunk X1?");
+            await AsyncLogger.WriteLine("What is chunk X1?");
             var inX1 = Convert.ToInt32(Console.ReadLine());
             AsyncLogger.WriteLine("What is chunk Z1?");
             var inZ1 = Convert.ToInt32(Console.ReadLine());
