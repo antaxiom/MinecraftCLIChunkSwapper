@@ -56,7 +56,8 @@ namespace Testing
 
             }
 
-            AsyncLogger.WriteLine("Operation Completed");
+            AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Stop();
             Console.ReadLine();
             AsyncLogger.StopThread();
         }
