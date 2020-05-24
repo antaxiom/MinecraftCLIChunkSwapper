@@ -15,7 +15,6 @@ namespace Testing
         private static async Task Main(string[] args)
         {
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
             AsyncLogger.WriteLine("Systems are go");
 
             var chunkPairs = new List<ChunkPair>();
@@ -34,6 +33,7 @@ namespace Testing
             else
             {
                 var chunkPair = initializeInputVariables();
+                stopwatch.Start();
                 chunkPairs.Add(chunkPair);
             }
 
