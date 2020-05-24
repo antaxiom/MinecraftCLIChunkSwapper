@@ -33,7 +33,11 @@ namespace Testing
             }
             else
             {
+
+                // TODO: Does this code restart the stop watch or resume?
+                stopwatch.Stop();
                 var chunkPair = initializeInputVariables();
+                stopwatch.Start();
                 chunkPairs.Add(chunkPair);
             }
 
