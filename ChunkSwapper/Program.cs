@@ -27,13 +27,9 @@ namespace Testing
 
                 var file = args[0];
 
-                if (!File.Exists(file))
-                {
-                    throw new FileNotFoundException($"Unable to find the file {file}");
-                }
+                if (!File.Exists(file)) throw new FileNotFoundException($"Unable to find the file {file}");
 
                 chunkPairs = await FileManager.getChunkSwapList(args[0]);
-
             }
             else
             {
@@ -49,11 +45,11 @@ namespace Testing
                 AsyncLogger.WriteLine($"{calcData1.byteOff} {calcData2.byteOff}");
                 string rf1;
                 string rf2;
-                (rf1, rf2) = FileManager.DirFind(calcData1.regionX, calcData1.regionZ, calcData2.regionX, calcData2.regionZ);
+                (rf1, rf2) = FileManager.DirFind(calcData1.regionX, calcData1.regionZ, calcData2.regionX,
+                    calcData2.regionZ);
                 var bs = new ByteSwapper();
                 bs.Readbytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
                 bs.SwapBytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
-
             }
 
             AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
@@ -61,7 +57,9 @@ namespace Testing
             Console.ReadLine();
             AsyncLogger.StopThread();
         }
-        internal static ChunkPair initializeInputVariables() {
+
+        internal static ChunkPair initializeInputVariables()
+        {
             AsyncLogger.WriteLine("All Good");
             AsyncLogger.WriteLine("What is chunk X1?");
             var inX1 = Convert.ToInt32(Console.ReadLine());
@@ -73,10 +71,7 @@ namespace Testing
             var inZ2 = Convert.ToInt32(Console.ReadLine());
 
 
-            return Calc.ChunkCalcFromBlockCoords(inX1, inZ1, inX2, inZ2);
+            return Calc.ChunkCalcFromChunkCoords(inX1, inZ1, inX2, inZ2);
         }
-
     }
-
-
 }

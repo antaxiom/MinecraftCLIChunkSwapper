@@ -17,11 +17,10 @@ namespace Testing
         /// <returns>Directory and Filename of region 1 and 2</returns>
         public static (string filename1, string filename2) DirFind(int rx1, int rz1, int rx2, int rz2)
         {
-            var filename1 = $"{AppDomain.CurrentDomain.BaseDirectory} /r.{rx1}. {rz1}.mca";
-            var filename2 = $"{AppDomain.CurrentDomain.BaseDirectory} /r.{rx2}. {rz2}.mca";
+            var filename1 = $"{AppDomain.CurrentDomain.BaseDirectory}r.{rx1}.{rz1}.mca";
+            var filename2 = $"{AppDomain.CurrentDomain.BaseDirectory}r.{rx2}.{rz2}.mca";
             return (filename1, filename2);
         }
-
 
 
         public static async Task<List<ChunkPair>> getChunkSwapList(string file)
@@ -31,7 +30,8 @@ namespace Testing
             var worldLine = await fileStream.ReadLineAsync();
 
             if (worldLine == null)
-                throw new FormatException($"Missing world('the_word') statement at beginning of file file {file}. The world parameter must be a folder directory that is accesible");
+                throw new FormatException(
+                    $"Missing world('the_word') statement at beginning of file file {file}. The world parameter must be a folder directory that is accesible");
 
             if (!File.Exists(worldLine))
                 throw new FileNotFoundException($"Could not find file {Path.GetFullPath(worldLine)}");
@@ -48,13 +48,12 @@ namespace Testing
         }
 
         /// <summary>
-        /// This is a method used for parsing the string x1:z1@x2:z2
-        ///
+        ///     This is a method used for parsing the string x1:z1@x2:z2
         /// </summary>
         /// <returns></returns>
         public static ChunkPair ParseLine(string line)
         {
-            var lineSeparated = line.Split("@",2);
+            var lineSeparated = line.Split("@", 2);
 
             var lineXZ1 = lineSeparated[0].Split(":");
             var lineXZ2 = lineSeparated[1].Split(":");
@@ -66,7 +65,7 @@ namespace Testing
             var rz2 = int.Parse(lineXZ2[1]);
 
 
-            return Calc.ChunkCalcFromBlockCoords(rx1 * 32, rz1 * 32, rx2 * 32, rz2 * 32);
+            return Calc.ChunkCalcFromChunkCoords(rx1, rz1, rx2, rz2);
         }
     }
 }

@@ -8,9 +8,8 @@ namespace Testing
         ///     Gets the byte offsets of the chunks the user specified
         /// </summary>
         /// <returns>Byteoffset of chunk 1 and 2, XY of Region 1 and 2</returns>
-        public static ChunkPair ChunkCalcFromBlockCoords(int inX1, int inZ1, int inX2, int inZ2)
+        public static ChunkPair ChunkCalcFromChunkCoords(int inX1, int inZ1, int inX2, int inZ2)
         {
-
             var regionX1 = (int) Math.Floor(inX1 / 32.0);
             var regionZ1 = (int) Math.Floor(inZ1 / 32.0);
             var regionX2 = (int) Math.Floor(inX2 / 32.0);
@@ -18,11 +17,12 @@ namespace Testing
             var byteOff1 = 4 * (inX1 % 32 + inZ1 % 32 * 32);
             var byteOff2 = 4 * (inX2 % 32 + inZ2 % 32 * 32);
 
-            Console.WriteLine($"Inputs are {inX1}, {inZ1} and {inX2}, {inZ2}");
+            Console.WriteLine($"Region inputs are {inX1}, {inZ1} and {inX2}, {inZ2}");
 
             return new ChunkPair(
                 new ChunkCoords(byteOff1, regionX1, regionZ1),
-                new ChunkCoords(byteOff: byteOff2, regionX: regionX2, regionZ: regionZ2) // Named parameters here are unnecessary but a good showcase
+                new ChunkCoords(byteOff2, regionX2,
+                    regionZ2) // Named parameters here are unnecessary but a good showcase
             );
         }
     }
