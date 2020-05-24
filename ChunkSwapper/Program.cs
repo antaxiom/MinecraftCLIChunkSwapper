@@ -9,9 +9,6 @@ namespace Testing
     internal static class Program
     {
         //TODO Add support for giving a text file as input and reading all chunks from there
-        //TODO Ability to go back and do another chunk without having the program close on you
-        //TODO Make this code clean
-        //TODO Gui? (Probably for a fork)
         private static async Task Main(string[] args)
         {
             var stopwatch = new Stopwatch();
@@ -32,7 +29,6 @@ namespace Testing
             }
             else
             {
-
                 // TODO: Does this code restart the stop watch or resume?
                 stopwatch.Stop();
                 var chunkPair = initializeInputVariables();
@@ -55,7 +51,9 @@ namespace Testing
                 bs.SwapBytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
             }
 
+
             AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
+            //TODO Ability to go back and do another chunk without having the program close on you
             stopwatch.Stop();
             Console.ReadLine();
             AsyncLogger.StopThread();
