@@ -12,7 +12,7 @@ namespace Testing
         private static async Task Main(string[] args)
         {
             var stopwatch = new Stopwatch();
-            AsyncLogger.WriteLine("Systems are go");
+            await AsyncLogger.WriteLine("Systems are go");
 
             var chunkPairs = new List<ChunkPair>();
 
@@ -39,7 +39,7 @@ namespace Testing
                 var calcData1 = chunkPair.chunk1;
                 var calcData2 = chunkPair.chunk2;
 
-                AsyncLogger.WriteLine($"{calcData1.byteOff} {calcData2.byteOff}");
+                await AsyncLogger.WriteLine($"{calcData1.byteOff} {calcData2.byteOff}");
                 string rf1;
                 string rf2;
                 (rf1, rf2) = FileManager.DirFind(calcData1.regionX, calcData1.regionZ, calcData2.regionX,
@@ -50,7 +50,7 @@ namespace Testing
             }
 
 
-            AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
+            await AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
             //TODO Ability to go back and do another chunk without having the program close on you
             stopwatch.Stop();
             Console.ReadLine();
@@ -59,14 +59,14 @@ namespace Testing
 
         internal static async Task<ChunkPair> initializeInputVariables()
         {
-            AsyncLogger.WriteLine("All Good");
+            await AsyncLogger.WriteLine("All Good");
             await AsyncLogger.WriteLine("What is chunk X1?");
             var inX1 = Convert.ToInt32(Console.ReadLine());
-            AsyncLogger.WriteLine("What is chunk Z1?");
+            await AsyncLogger.WriteLine("What is chunk Z1?");
             var inZ1 = Convert.ToInt32(Console.ReadLine());
-            AsyncLogger.WriteLine("What is chunk X2?");
+            await AsyncLogger.WriteLine("What is chunk X2?");
             var inX2 = Convert.ToInt32(Console.ReadLine());
-            AsyncLogger.WriteLine("What is chunk Z2?");
+            await AsyncLogger.WriteLine("What is chunk Z2?");
             var inZ2 = Convert.ToInt32(Console.ReadLine());
 
 

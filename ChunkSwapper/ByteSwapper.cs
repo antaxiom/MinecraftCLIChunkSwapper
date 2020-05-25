@@ -18,10 +18,10 @@ namespace Testing
         /// <param name="off2">Byte offset for file2</param>
         public void Readbytes(string file1, string file2, int off1, int off2)
         {
-            var fileStream1 = new FileStream(file1, FileMode.Open);
-            var fileStream2 = new FileStream(file2, FileMode.Open);
-            var binaryReader1 = new BinaryReader(fileStream1);
-            var binaryReader2 = new BinaryReader(fileStream2);
+            using var fileStream1 = new FileStream(file1, FileMode.Open);
+            using var fileStream2 = new FileStream(file2, FileMode.Open);
+            using var binaryReader1 = new BinaryReader(fileStream1);
+            using var binaryReader2 = new BinaryReader(fileStream2);
             fileStream1.Seek(off1, 0);
             var chunkByte1 = binaryReader1.ReadBytes(BLength);
             fileStream2.Seek(off2, 0);
@@ -59,10 +59,10 @@ namespace Testing
                             DateTime.Now.Millisecond + "-" + ".backup");
             }
 
-            var fileStream1 = new FileStream(file1, FileMode.Open);
-            var fileStream2 = new FileStream(file2, FileMode.Open);
-            var binaryWriter1 = new BinaryWriter(fileStream1);
-            var binaryWriter2 = new BinaryWriter(fileStream2);
+            using var fileStream1 = new FileStream(file1, FileMode.Open);
+            using var fileStream2 = new FileStream(file2, FileMode.Open);
+            using var binaryWriter1 = new BinaryWriter(fileStream1);
+            using var binaryWriter2 = new BinaryWriter(fileStream2);
             fileStream1.Seek(off1, 0);
             binaryWriter1.Write(_chunkBytes2);
             fileStream1.Flush();

@@ -43,7 +43,7 @@ namespace Testing
                 var pair = ParseLine(await fileStream.ReadLineAsync());
                 chunkPairs.Add(pair);
             }
-
+            fileStream.Close();
             return chunkPairs;
         }
 
