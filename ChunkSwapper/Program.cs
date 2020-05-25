@@ -12,7 +12,7 @@ namespace Testing
         private static async Task Main(string[] args)
         {
             var stopwatch = new Stopwatch();
-            await AsyncLogger.WriteLine("Systems are go");
+            AsyncLogger.WriteLine("Systems are go");
 
             var chunkPairs = new List<ChunkPair>();
 
@@ -29,8 +29,7 @@ namespace Testing
             }
             else
             {
-                var chunkPair = initializeInputVariables();
-                chunkPairs.Add(await chunkPair);
+                chunkPairs.Add(InitializeInputVariables());
                 stopwatch.Start();
             }
 
@@ -39,34 +38,34 @@ namespace Testing
                 var calcData1 = chunkPair.chunk1;
                 var calcData2 = chunkPair.chunk2;
 
-                await AsyncLogger.WriteLine($"{calcData1.byteOff} {calcData2.byteOff}");
+                AsyncLogger.WriteLine($"{calcData1.byteOff} {calcData2.byteOff}");
                 string rf1;
                 string rf2;
                 (rf1, rf2) = FileManager.DirFind(calcData1.regionX, calcData1.regionZ, calcData2.regionX,
                     calcData2.regionZ);
-                var bs = new ByteSwapper();
-                bs.Readbytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
-                bs.SwapBytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
+                await ByteSwapper.ReadAndSwapBytes(rf1, rf2, calcData1.byteOff, calcData2.byteOff);
             }
 
 
-            await AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
+            AsyncLogger.WriteLine($"Operation Completed. Took {stopwatch.ElapsedMilliseconds}ms");
             //TODO Ability to go back and do another chunk without having the program close on you
             stopwatch.Stop();
             Console.ReadLine();
             AsyncLogger.StopThread();
+
+            Environment.Exit(0);
         }
 
-        internal static async Task<ChunkPair> initializeInputVariables()
+        private static ChunkPair InitializeInputVariables()
         {
-            await AsyncLogger.WriteLine("All Good");
-            await AsyncLogger.WriteLine("What is chunk X1?");
+            AsyncLogger.WriteLine("All Good");
+            AsyncLogger.WriteLine("What is chunk X1?");
             var inX1 = Convert.ToInt32(Console.ReadLine());
-            await AsyncLogger.WriteLine("What is chunk Z1?");
+            AsyncLogger.WriteLine("What is chunk Z1?");
             var inZ1 = Convert.ToInt32(Console.ReadLine());
-            await AsyncLogger.WriteLine("What is chunk X2?");
+            AsyncLogger.WriteLine("What is chunk X2?");
             var inX2 = Convert.ToInt32(Console.ReadLine());
-            await AsyncLogger.WriteLine("What is chunk Z2?");
+            AsyncLogger.WriteLine("What is chunk Z2?");
             var inZ2 = Convert.ToInt32(Console.ReadLine());
 
 

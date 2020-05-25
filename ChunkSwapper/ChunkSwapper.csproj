@@ -6,6 +6,11 @@
         <RootNamespace>Testing</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <PlatformTarget>x64</PlatformTarget>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="ILMerge" Version="3.0.40" />
     </ItemGroup>

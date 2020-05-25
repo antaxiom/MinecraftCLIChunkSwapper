@@ -25,12 +25,12 @@ namespace Testing
         // Debug variable. Switch this to see performance difference
         private const bool WriteLineAsync = true;
 
-        public static async Task WriteLine(string s, params object[] args)
+        public static void WriteLine(string s, params object[] args)
         {
             if (WriteLineAsync)
             {
                 // TODO: Benchmark and ensure this is running asynchronous
-                await Task.Run(() => Console.WriteLine(s, args));
+                Task.Run(() => Console.WriteLine(s, args));
                 // PrintQueue.Enqueue(new Tuple<string, object[]>(s, args));
             }
             else
