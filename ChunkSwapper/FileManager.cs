@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Testing
@@ -15,15 +16,15 @@ namespace Testing
         /// <param name="rx2">X of Chunk 2</param>
         /// <param name="rz2">Z pf Chunk 2</param>
         /// <returns>Directory and Filename of region 1 and 2</returns>
-        public static (string filename1, string filename2) DirFind(int rx1, int rz1, int rx2, int rz2)
+        public static (string filename1, string filename2) DirFind(string folder, int rx1, int rz1, int rx2, int rz2)
         {
-            var filename1 = $"./r.{rx1}.{rz1}.mca";
-            var filename2 = $"./r.{rx2}.{rz2}.mca";
+            var filename1 = $"{folder}/r.{rx1}.{rz1}.mca";
+            var filename2 = $"{folder}/r.{rx2}.{rz2}.mca";
             return (filename1, filename2);
         }
 
 
-        public static async Task<List<ChunkPair>> getChunkSwapList(string file)
+        public static async Task<(string worldLine, List<ChunkPair>)> GetChunkSwapList(string file)
         {
             using var fileStream = File.OpenText(file);
 
@@ -33,18 +34,47 @@ namespace Testing
                 throw new FormatException(
                     $"Missing world('the_word') statement at beginning of file file {file}. The world parameter must be a folder directory that is accesible");
 
-            if (!File.Exists(worldLine))
-                throw new FileNotFoundException($"Could not find file {Path.GetFullPath(worldLine)}");
+            var worldRegex = new Regex("world\\(\"(.*)\"\\)");
+
+            var worldMatch = worldRegex.Match(worldLine);
+
+            if (worldMatch.Groups.Count == 0) throw new FormatException($"World line ({worldLine}) does not match world regex ({worldRegex}).");
+
+            worldLine = worldMatch.Groups[1].Value;
+
+            var worldPath = Path.GetFullPath(worldLine, Path.GetDirectoryName(Path.GetFullPath(file)) ?? throw new InvalidOperationException());
+
+            if (!Directory.Exists(worldPath))
+                throw new FileNotFoundException($"Could not find directory {worldPath}");
+
+            var regionPath = Path.GetFullPath("region", worldPath);
+
+            if (Directory.Exists(regionPath)) // Check if the folder contains a "region" folder, if so use that instead.
+                worldPath = Path.GetFullPath("region", worldPath);
+
+            AsyncLogger.WriteLine($"Using world folder {worldPath}");
 
             var chunkPairs = new List<ChunkPair>();
 
             while (!fileStream.EndOfStream)
             {
-                var pair = ParseLine(await fileStream.ReadLineAsync());
-                chunkPairs.Add(pair);
+                var fileLine = await fileStream.ReadLineAsync();
+
+                if (fileLine == "") continue;
+
+                try
+                {
+                    var pair = ParseLine(fileLine);
+                    chunkPairs.Add(pair);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Unable to parse {fileLine}.", e);
+                }
             }
+
             fileStream.Close();
-            return chunkPairs;
+            return (worldPath, chunkPairs);
         }
 
         /// <summary>
