@@ -83,21 +83,21 @@ namespace Testing
         /// <param name="file2">File Location 2</param>
         private static void RegionDiscriminator(string file1, string file2)
         {
+            var timeBackupFormat = $"{DateTime.Now.Day}-${DateTime.Now.Hour}-{DateTime.Now.Minute}" +
+                                   $"-{DateTime.Now.Second}.backup";
+
             AsyncLogger.WriteLine($"Creating backup for {file1} {file2}");
             if (file1 == file2)
             {
                 File.Copy(file1,
-                    file1 + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" +
-                    DateTime.Now.Millisecond + "-" + ".backup", true);
+                    $"{file1}-{timeBackupFormat}", true);
             }
             else
             {
                 File.Copy(file2,
-                    file2 + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" +
-                    DateTime.Now.Millisecond + ".backup", true);
+                    $"{file2}-{timeBackupFormat}", true);
                 File.Copy(file1,
-                    file1 + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" +
-                    DateTime.Now.Millisecond + ".backup", true);
+                    $"{file1}-{timeBackupFormat}", true);
             }
             AsyncLogger.WriteLine($"Finished backup for {file1} {file2}");
         }
