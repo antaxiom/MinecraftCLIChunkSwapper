@@ -1,8 +1,8 @@
 ﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ChunkSwapper" type="DotNetProject" factoryName=".NET Project">
+  <configuration default="false" name="ScriptTest" type="DotNetProject" factoryName=".NET Project">
     <option name="EXE_PATH" value="$PROJECT_DIR$/ChunkSwapper/bin/Debug/netcoreapp3.1/ChunkSwapper.dll" />
-    <option name="PROGRAM_PARAMETERS" value="" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ChunkSwapper/Sample Projects/Sample World 1" />
+    <option name="PROGRAM_PARAMETERS" value="./script1.csf" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ChunkSwapper/Sample Projects" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
