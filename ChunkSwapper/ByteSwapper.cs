@@ -1,10 +1,11 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Testing
 {
-    public class ByteSwapper
+    public static class ByteSwapper
     {
         private const int BLength = 4;
 
@@ -17,6 +18,8 @@ namespace Testing
         /// <param name="off2">Byte offset for file2</param>
         public static async Task<(byte[] _chunkBytes1, byte[] _chunkBytes2)> ReadBytes(string file1, string file2, int off1, int off2)
         {
+            Thread.Sleep(10); // Wait to finish closing file
+
             await using var fileStream1 = File.OpenRead(file1);
             await using var fileStream2 = File.OpenRead(file2);
 
@@ -27,6 +30,13 @@ namespace Testing
 
             var chunkByte1 = binaryReader1.ReadBytes(BLength);
             var chunkByte2 = binaryReader2.ReadBytes(BLength);
+
+
+            binaryReader1.Close();
+            binaryReader2.Close();
+
+            fileStream1.Close();
+            fileStream2.Close();
 
             return (chunkByte1, chunkByte2);
         }
@@ -43,10 +53,10 @@ namespace Testing
         public static async Task SwapBytes(string file1, string file2, int off1, int off2, byte[] chunkBytes1,
             byte[] chunkBytes2)
         {
-
             RegionDiscriminator(file1, file2);
 
-            Console.WriteLine("Backup already exists, overwriting");
+            AsyncLogger.WriteLine($"Swapping chunks bytes at {file1}:{off1} with {file2}:{off2}");
+
 
             if (file1 != file2)
             {
